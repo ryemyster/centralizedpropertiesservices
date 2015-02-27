@@ -1,0 +1,49 @@
+.title {
+	/*text-align: center;*/
+}
+
+#titleSpan {
+	font-family: monospace;
+	font-size: 250%;
+	font-weight: bolder;
+	color: white;
+	font: italic;
+}
+
+body {
+	background-image:
+		url("http://cdn2.dailyinspiration.nl/wp-content/uploads/old/201005012/9.jpg");
+	background-repeat: repeat-y;
+	background-size: 100% auto;
+	color: white;
+	font-family: monospace;
+}
+
+.body {
+	/*margin-top: 75px;
+	padding-left: 30%;*/
+	color: white;
+}
+
+button {
+	cursor: pointer;
+	border: double;
+	background-color: white;
+	/*height: 34px;
+	margin: 0 auto;
+	margin-right: 0px;
+	text-align: center;
+	width: 644px;*/
+}
+
+#buttonDiv {
+	/*padding-left: 380px;
+	padding-right: 250px*/
+	
+}
+
+textarea {
+	/*padding-right: 250px;
+	padding-left: 25px;*/
+	
+}

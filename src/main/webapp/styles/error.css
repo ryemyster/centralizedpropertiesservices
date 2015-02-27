@@ -1,0 +1,9 @@
+body {
+	padding: 0px;
+	font: 20px "Lucida Grande", Helvetica, Arial, sans-serif;
+	background-color: brown;
+}
+
+pre, h1, h2 {
+	color: green;
+}

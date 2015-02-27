@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:amq="http://activemq.apache.org/schema/core"
+	xmlns:context="http://www.springframework.org/schema/context" xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:jms="http://www.springframework.org/schema/jms" xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:cache="http://www.springframework.org/schema/cache" xmlns:util="http://www.springframework.org/schema/util"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context 
+        http://www.springframework.org/schema/context/spring-context.xsd 
+        http://activemq.apache.org/schema/core 
+        http://activemq.apache.org/schema/core/activemq-core.xsd 
+        http://www.springframework.org/schema/jms 
+        http://www.springframework.org/schema/jms/spring-jms.xsd 
+        http://www.springframework.org/schema/cache 
+        http://www.springframework.org/schema/cache/spring-cache.xsd 
+        http://www.springframework.org/schema/util 
+        http://www.springframework.org/schema/util/spring-util.xsd
+        http://www.springframework.org/schema/aop 
+        http://www.springframework.org/schema/aop/spring-aop.xsd">
+
+	<aop:aspectj-autoproxy />
+	<context:annotation-config />
+	<context:component-scan base-package="com.properties" />
+
+
+	<util:properties id="properties"
+		location="classpath:properties-service.properties" />
+
+	<!-- TODO: DUE TO SINGLETON AND THE DYNAMIC BEAN FACTORY UPDATE, AUTOWIRING 
+		BREAKS -->
+	<bean id="storageAdapterFactory" class="com.properties.StorageAdapterFactory" />
+
+	<bean id="propertiesServices" class="com.properties.PropertiesServicesImpl">
+		<property name="storageAdapterFactory" ref="storageAdapterFactory" />
+	</bean>
+
+	<bean id="propertiesServiceEndpoint"
+		class="com.properties.restservices.PropertiesServiceEndpoint">
+		<property name="storageAdapterFactory" ref="storageAdapterFactory" />
+		<property name="propertiesServices" ref="propertiesServices" />
+	</bean>
+
+	<bean id="storageAdapter" class="com.properties.StorageAdapterImpl"
+		factory-bean="storageAdapterFactory" factory-method="instanceOf">
+		<property name="queueServices" ref="queueServices" />
+		<property name="fileService" ref="fileService" />
+		<property name="databaseService" ref="databaseService" />
+	</bean>
+
+	<bean id="databaseService"
+		class="com.properties.database.DatabaseServiceImpl">
+		<property name="customRedisTemplate" ref="customRedisTemplate" />
+	</bean>
+	<bean id="queueServices"
+		class="com.properties.queueservices.QueueServicesImpl">
+		<property name="jmsTemplate" ref="jmsTemplate" />
+	</bean>
+	<bean id="fileService" class="com.properties.fileio.FileServiceImpl" />
+
+
+
+	<bean id="connectionManager"
+		class="org.apache.commons.httpclient.MultiThreadedHttpConnectionManager" />
+
+	<bean id="httpClient" class="org.apache.commons.httpclient.HttpClient">
+		<constructor-arg ref="connectionManager" />
+	</bean>
+
+	<bean
+		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer" />
+
+	<!-- create an embedded ActiveMQ Broker -->
+	<amq:broker id="broker" useJmx="true" persistent="false">
+		<amq:transportConnectors>
+			<amq:transportConnector uri="tcp://localhost:0" />
+		</amq:transportConnectors>
+	</amq:broker>
+
+	<amq:connectionFactory id="jmsFactory" brokerURL="vm://localhost" />
+
+	<bean id="jmsProducerConnectionFactory"
+		class="org.springframework.jms.connection.SingleConnectionFactory"
+		depends-on="broker" p:targetConnectionFactory-ref="jmsFactory" />
+
+	<bean id="jmsTemplate" class="org.springframework.jms.core.JmsTemplate"
+		p:connectionFactory-ref="jmsProducerConnectionFactory"
+		p:defaultDestination-ref="destination" />
+	<amq:queue id="destination" physicalName="com.properties" />
+
+	<!-- <amq:queue id="destination" physicalName="com.properties.test" 
+		/> <amq:connectionFactory id="jmsFactory" brokerURL="tcp://localhost:61616" 
+		/> <bean id="jmsProducerConnectionFactory" class="org.springframework.jms.connection.CachingConnectionFactory" 
+		p:targetConnectionFactory-ref="jmsFactory" p:sessionCacheSize="10" /> <bean 
+		id="jmsProducerTemplate" class="org.springframework.jms.core.JmsTemplate" 
+		p:connectionFactory-ref="jmsProducerConnectionFactory" p:defaultDestination-ref="destination" 
+		/> -->
+
+	<!-- REDIS Database -->
+	<bean id="jedisConnectionFactory"
+		class="org.springframework.data.redis.connection.jedis.JedisConnectionFactory"
+		p:host-name="localhost" p:port="6379" />
+
+	<bean id="customRedisTemplate" class="com.extensions.redis.CustomRedisTemplate"
+		p:connection-factory-ref="jedisConnectionFactory" />
+
+
+</beans>

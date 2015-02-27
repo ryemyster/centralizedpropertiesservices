@@ -1,0 +1,80 @@
+<!doctype html>
+<html ng-app="propteriesApp">
+<head>
+<meta charset="utf-8">
+
+<!-- Optimize mobile viewport -->
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>My Test App</title>
+<link href="styles/global.css" rel="stylesheet" type="text/css" />
+
+<!-- FRAMEWORKS -->
+<script src="js/frameworks/jquery-1.11.1.min.js"></script>
+<script src="js/frameworks/bootstrap.min.js"></script>
+<script src="js/frameworks/angular.min.js"></script>
+
+<!-- CONTROLLERS-->
+<script src="js/controllers/mainController.js"></script>
+</head>
+
+<!--  BODY -->
+<!-- 
+
+INITIAL PAGE SHOULD SHOW PROPERTIES AVAILABLE BY INSTANCE ID AND NAME, IF NO PROPERTIES THEN DISPLAY ADD NEW FORM 
+A CLICK ON THE INSTANCE ID SHOULD THEN CHANGE THE PAGE TO SHOW THE PROPERTIES PER INSTANCE 
+
+Strategy:
+1. Create Add New Form for 0 instance ID entries .. save new instance info to file using middleware.
+2. Stop and start app, make display instance properties  table for instances that are available
+3. Configure click to view properties of each instance
+4. Configure Editing of each property per instance and save via middleware.
+-->
+
+<!-- <input type="email"/> -->
+<body ng-controller="mainController">
+
+    <div>
+        <h1>Properties Services</h1>
+
+        <div>
+            <!-- ng-repeat="InstanceController as instance" -->
+            <label>Instance Name:</label><input type="text" name="instancename" />
+            <label>Instance Host ID:</label> <input type="text"
+                name="instancehostid" />
+        </div>
+
+        <div ng-controller="PropertiesController as properties">
+            Properties Are:
+            <div ng-repeat=""></div>
+        </div>
+
+        <div ng-controller="tableController as table">
+            <!-- ng-repeat="PropertiesController as properties" example--
+            {instance_id:"",instance_name:"", properties:{name:"",
+            description:""}} -->
+
+            Properties:
+
+            <!-- How do we get put data from property in an input box as a list and save a change as a form? 
+            Table is property header and value.. 
+            
+            if checkbox checked allow user to edit values and save 
+            (on check change values to input boxes w/ current data displaying)
+            -->
+            <table class="properties">
+                <tr id="propertyColumns">
+                    <th ng-repeat="column in columns">{{column.name}}</th>
+                </tr>
+                <tr id="propertyRows">
+                    <td ng-repeat="row in rows"><input type="text"
+                        name="instancename" size="50" /></td>
+                </tr>
+            </table>
+        </div>
+    </div>
+
+
+</body>
+
+</html>

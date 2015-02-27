@@ -1,0 +1,57 @@
+<html>
+<head>
+<title>Properties Services</title>
+<html lang="eng">
+
+<head>
+<meta charset="utf-8">
+
+<script src='http://code.jquery.com/jquery-2.1.1.min.js'></script>
+<script src='js/properties.js'></script>
+
+<link rel="stylesheet" type="text/css"
+	href="styles/propertiesmanager.css"></link>
+
+</head>
+
+<body>
+
+	<div id="timeDiv"></div>
+
+	<div class="title">
+		<span id="titleSpan">Properties Services</span>
+	</div>
+
+	<div id="buttonDiv">
+		<button id="serverStatus" type="button">Check Server Status</button>
+	</div>
+
+	<div class="body">
+		Enter Instance Properties in JSON:
+		<div>
+			<textarea id="propertiesJSON" rows="25" cols="50"></textarea>
+		</div>
+	</div>
+
+	<div id="buttonDiv">
+		<table>
+			<td><input type="checkbox" id="queueBox">Persist to
+				Queue</td>
+			<td><input type="checkbox" id="fileBox">Persist To File</td>
+			<td><input type="checkbox" id="databaseBox">Persist To
+				Local Database</td>
+		</table>
+	</div>
+
+	<div id="buttonDiv">
+		<button id="saveButton" type="button">Save</button>
+	</div>
+
+	<div id="buttonDiv">
+		<table id="buttonDiv">TODO: Fix this to scale automatically
+			and provide corporate style background and buttons
+		</table>
+	</div>
+
+</body>
+</html>

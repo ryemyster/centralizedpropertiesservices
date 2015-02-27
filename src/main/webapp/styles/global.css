@@ -1,0 +1,50 @@
+body {
+	padding: 0px;
+	font: 20px "Lucida Grande", Helvetica, Arial, sans-serif;
+	color: white;
+	background-color: black;
+	/*background-image:
+		url("http://cdn2.dailyinspiration.nl/wp-content/uploads/old/201005012/9.jpg");*/
+}
+
+.head {
+	/*background-image: url("https://localhost:9998/images/download.jpeg");*/
+	background-color: orange;
+}
+
+button {
+	float: left;
+}
+
+p {
+	color: white;
+}
+
+h1 {
+	color: white;
+}
+
+pre {
+	color: white;
+}
+
+html {
+	overflow-y: scroll;
+}
+
+table {
+	border-style: inset;
+	border-color: silver;
+	background-color: black;
+	width: 100%;
+	table-layout: fixed;
+}
+
+td {
+	text-align: left;
+}
+
+.outertable {
+	border-style: outset;
+	border-color: silver;
+}

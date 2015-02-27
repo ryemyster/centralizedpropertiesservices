@@ -1,0 +1,148 @@
+<!doctype html>
+<html ng-app="propteriesApp">
+<head>
+<meta charset="utf-8">
+<!-- Optimize Mobile Viewport -->
+<meta
+     name="viewport"
+     content="width=device-width, initial-scale=1">
+<title>System Properties</title>
+<link
+     href="styles/global.css"
+     rel="stylesheet"
+     type="text/css" />
+<script src="js/frameworks/jquery-1.11.1.min.js"></script>
+<script src="js/frameworks/bootstrap.min.js"></script>
+<script src="js/frameworks/angular.min.js"></script>
+<script src="js/controllers/propertiesController.js"></script>
+</head>
+<body ng-controller="PropertiesController as properties">
+     <h1>System Properties</h1>
+     <div
+          class="outertable"
+          ng-show="properties.instances.length > 0">
+          Instances:
+          <div ng-repeat="instance in properties.instances">
+               <input
+                    type="checkbox"
+                    ng-model="instance.isChecked"> {{instance.instance_name}} </input>
+               <table ng-show="instance.isChecked">
+                    <tr>
+                         <td>Name:<input
+                              type="text"
+                              value="{{instance.instance_name}}"
+                              size="40"></input>
+                         </td>
+                         <td>URL:<input
+                              type="text"
+                              value="{{instance.instance_url}}"
+                              size="45"></input></td>
+                         <td>ID: <input
+                              type="text"
+                              value="{{instance.instance_id}}"
+                              size="45">
+                         </td>
+                    </tr>
+                    <!-- Dynamic row for properties -->
+                    <tr ng-repeat="property in instance.properties">
+                         <td>Property ID<input
+                              type="text"
+                              value="{{property.property_id}}"
+                              size="40"></input>
+                         </td>
+                         <td>Property Description<input
+                              type="text"
+                              value="{{property.property_description}}"
+                              size="40"></input>
+                         </td>
+                         <td>Property Key<input
+                              type="text"
+                              value="{{property.property_key}}"
+                              size="40"></input>
+                         </td>
+                         <td>Property Value<input
+                              type="text"
+                              value="{{property.property_value}}"
+                              size="40"></input>
+                         </td>
+                    </tr>
+                    <tr ng-show="instance.isChecked">
+                         <td>
+                              <button
+                                   style="position: left"
+                                   onclick="alert('Not Implemented Yet')"
+                                   ng-show="instance.isChecked">Save</button>
+                              <button
+                                   style="position: left"
+                                   onclick="alert('Not Implemented Yet')"
+                                   ng-show="instance.isChecked">Delete</button>
+                              <button
+                                   style="position: left"
+                                   onclick="alert('Not Implemented Yet')"
+                                   ng-show="instance.isChecked">Add Property</button>
+                              <button
+                                   style="position: left"
+                                   onclick="alert('Not Implemented Yet')"
+                                   ng-show="instance.isChecked">Remove Property</button>
+                         </td>
+                    </tr>
+                    </td>
+               </table>
+          </div>
+     </div>
+     <div>
+          <button ng-click="properties.showAdd = true">Add instance</button>
+          <table ng-show="properties.showAdd">
+               <tr>
+                    <td>Name:<input
+                         type="text"
+                         size="40"
+                         ng-model="properties.newInstance.instance_name"></input>
+                    </td>
+                    <td>URL:<input
+                         type="text"
+                         ng-model="properties.newInstance.instance_url"
+                         size="45"></input></td>
+                    <td>ID: <input
+                         type="text"
+                         ng-model="properties.newInstance.instance_id"
+                         size="45">
+                    </td>
+               </tr>
+               <!-- Dynamic row for properties how to add a new properties tr on click -->
+               <tr
+                    ng-show="properties.propertyNumber > 0"
+                    ng-repeat="property in properties.newProperties">
+                    <td>Property ID<input
+                         type="text"
+                         ng-model="property.tempProperty.property_id"
+                         size="40"></input>
+                    </td>
+                    <td>Property Description<input
+                         type="text"
+                         ng-model="property.tempProperty.property_description"
+                         size="40"></input>
+                    </td>
+                    <td>Property Key<input
+                         type="text"
+                         ng-model="property.tempProperty.property_key"
+                         size="40"></input>
+                    </td>
+                    <td>Property Value<input
+                         type="text"
+                         ng-model="property.tempProperty.property_value"
+                         size="40"></input>
+                    </td>
+               </tr>
+               <tr>
+                    <td>
+                         <button ng-click="properties.incrementValue()">Add Property</button>
+                         <button ng-click="properties.decrementValue()">Remove Property</button>
+                         <button ng-click="properties.save()">Save</button>
+                         <button ng-click="properties.cancelNewInstance()">Cancel</button>
+                    </td>
+               </tr>
+          </table>
+     </div>
+</body>
+</html>
