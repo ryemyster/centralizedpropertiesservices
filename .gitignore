@@ -1,8 +1,9 @@
 # Eclipse
 .classpath
 .project
-.settings/
+.settings
 .externalToolBuilders
+.gradle
 
 # Intellij
 .idea/
@@ -19,6 +20,6 @@ bin/
 
 #
 .tern-project
-/target/
+target/
 build/
 gradle/
