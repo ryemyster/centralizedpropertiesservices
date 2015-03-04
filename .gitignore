@@ -14,7 +14,7 @@
 # Maven
 log/
 target/
-/bin/
+bin/
 
 #
 .tern-project
